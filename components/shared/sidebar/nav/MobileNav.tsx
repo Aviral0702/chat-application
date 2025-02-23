@@ -7,13 +7,16 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 import useNavigation from "@/hooks/useNavigation";
+import { useConversation } from "@/hooks/useConversation";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
+import { ThemeButton } from "@/components/ui/theme/ThemeButton";
 
 function MobileNav() {
   const paths = useNavigation();
-
+  const { isActive } = useConversation();
+  if (isActive) return null;
   return (
     <Card className="fixed bottom-4 w-[calc(100vw-32px)] flex items-center h-16 p-2 lg:hidden">
       <nav className="w-full">
@@ -37,6 +40,9 @@ function MobileNav() {
               </li>
             );
           })}
+          <li>
+            <ThemeButton />
+          </li>
           <li>
             <UserButton />
           </li>

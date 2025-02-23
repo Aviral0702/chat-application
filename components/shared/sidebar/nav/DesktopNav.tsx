@@ -1,10 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Tooltip, TooltipTrigger,TooltipContent } from "@/components/ui/tooltip";
+import { ThemeButton } from "@/components/ui/theme/ThemeButton";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import useNavigation from "@/hooks/useNavigation";
 import { UserButton } from "@clerk/nextjs";
-import  Link  from "next/link";
+import Link from "next/link";
 import React from "react";
 
 function DesktopNav() {
@@ -36,6 +41,7 @@ function DesktopNav() {
         </ul>
       </nav>
       <div className="flex flex-col items-center gap-4">
+        <ThemeButton />
         <UserButton />
       </div>
     </Card>

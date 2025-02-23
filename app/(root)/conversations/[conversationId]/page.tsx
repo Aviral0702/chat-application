@@ -1,3 +1,4 @@
+import ConversationContainer from '@/components/shared/conversation/ConversationContainer';
 import React from 'react'
 
 type Props = {
@@ -5,11 +6,11 @@ type Props = {
         conversationId: string;
     }
 }
-function Page({params}: Props) {
+async function Page({params}: Props) {
     const {conversationId} = params;
     
     return (
-        <div>ConversationPage {conversationId}</div>
+        <ConversationContainer>ConversationPage {conversationId}</ConversationContainer>
     )
 }
 
