@@ -1,9 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useMutationState } from "@/hooks/useMutationState";
+import { useMutation } from "convex/react";
+import { ConvexError } from "convex/values";
 import { Check, User, X } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 
 type Props = {
   id: Id<"requests">;
@@ -14,7 +19,7 @@ type Props = {
 
 function Request(props: Props) {
   const { id, image_url, username, email } = props;
-
+  const {mutate: denyRequest, pending: denying} = useMutationState(api.request.deny);
   return (
     <Card className="w-full p-2 flex flex-row items-center justify-between gap-2">
       <div className="flex items-center gap-4 truncate">
@@ -32,10 +37,14 @@ function Request(props: Props) {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <Button size="icon" onClick={() => {}}>
+        <Button size="icon" disabled={denying} onClick={() => {}}>
           <Check />
         </Button>
-        <Button size="icon" variant="destructive" onClick={() => {}}>
+        <Button size="icon" disabled={denying} variant="destructive" onClick={() => {
+            denyRequest({id}).then(()=>{toast.success("Request denied")}).catch((error)=>{
+                toast.error(error instanceof ConvexError ? error.data : "Unexpected error occurred")
+            })
+        }}>
           <X className="h-4 w-4" />
         </Button>
       </div>

@@ -103,7 +103,7 @@ function AddFriendDialogBox(props: Props) {
               )}
             />
             <DialogFooter>
-              <Button disabled={false}type="submit">
+              <Button disabled={pending}type="submit">
                 Send
               </Button>
             </DialogFooter>
