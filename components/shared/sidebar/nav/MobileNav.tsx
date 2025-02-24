@@ -12,6 +12,7 @@ import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
 import { ThemeButton } from "@/components/ui/theme/ThemeButton";
+import { Badge } from "@/components/ui/badge";
 
 function MobileNav() {
   const paths = useNavigation();
@@ -33,6 +34,7 @@ function MobileNav() {
                       >
                         {path.icon}
                       </Button>
+                      {path.count ? (<Badge className="absolute left-6 bottom-7 px-2 rounded-full">{path.count}</Badge>) : null}
                     </Link>
                   </TooltipTrigger>
                   <TooltipContent>{path.name}</TooltipContent>
