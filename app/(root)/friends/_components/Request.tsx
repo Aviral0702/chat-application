@@ -20,6 +20,7 @@ type Props = {
 function Request(props: Props) {
   const { id, image_url, username, email } = props;
   const {mutate: denyRequest, pending: denying} = useMutationState(api.request.deny);
+  const {mutate: acceptRequest, pending: accepting} = useMutationState(api.request.accept);
   return (
     <Card className="w-full p-2 flex flex-row items-center justify-between gap-2">
       <div className="flex items-center gap-4 truncate">
@@ -37,10 +38,14 @@ function Request(props: Props) {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <Button size="icon" disabled={denying} onClick={() => {}}>
+        <Button size="icon" disabled={accepting || denying} onClick={() => {
+            acceptRequest({id}).then(()=>{toast.success("Request accepted")}).catch((error)=>{
+                toast.error(error instanceof ConvexError ? error.data : "Unexpected error occurred")
+            })
+        }}>
           <Check />
         </Button>
-        <Button size="icon" disabled={denying} variant="destructive" onClick={() => {
+        <Button size="icon" disabled={accepting || denying} variant="destructive" onClick={() => {
             denyRequest({id}).then(()=>{toast.success("Request denied")}).catch((error)=>{
                 toast.error(error instanceof ConvexError ? error.data : "Unexpected error occurred")
             })
