@@ -18,9 +18,19 @@ function Layout({ children }: Props) {
             <p className="w-full h-full flex items-center justify-center">
               No Conversations Found
             </p>
-          ) : (conversations.map((conversations)=>{
-            return conversations.conversation.isGroup ? null : <DMConversationItems id={conversations.conversation._id} username={conversations.otherMember?.username || ""} imageUrl={conversations.otherMember?.imageUrl || ""}/>
-          }))
+          ) : (
+            conversations.map((conversations) => {
+              return conversations.conversation.isGroup ? null : (
+                <DMConversationItems
+                  id={conversations.conversation._id}
+                  username={conversations.otherMember?.username || ""}
+                  imageUrl={conversations.otherMember?.imageUrl || ""}
+                  lastMessageContent={conversations.lastMessage?.content}
+                  lastMessageSender={conversations.lastMessage?.sender}
+                />
+              );
+            })
+          )
         ) : (
           <Loader2 />
         )}
