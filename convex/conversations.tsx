@@ -32,18 +32,28 @@ export const get = query({
       })
     );
     const conversationWithDetails = await Promise.all(
-      conversations.map(async(conversation,index)=> {
-        const allconversationMemberships = await ctx.db.query("conversationMembers").withIndex("by_conversationId",(q)=>q.eq("conversationId",conversation?._id)).collect();
-        const lastMessage = await getLastMessageDetails({ctx,id: conversation.lastMessageId});
-        if(conversation.isGroup) {
-          return {conversation,lastMessage} 
+      conversations.map(async (conversation, index) => {
+        const allconversationMemberships = await ctx.db
+          .query("conversationMembers")
+          .withIndex("by_conversationId", (q) =>
+            q.eq("conversationId", conversation?._id)
+          )
+          .collect();
+        const lastMessage = await getLastMessageDetails({
+          ctx,
+          id: conversation.lastMessageId,
+        });
+        if (conversation.isGroup) {
+          return { conversation, lastMessage };
         } else {
-          const otherMembership = allconversationMemberships.filter((membership)=> membership.memberId !== currentUser._id)[0];
+          const otherMembership = allconversationMemberships.filter(
+            (membership) => membership.memberId !== currentUser._id
+          )[0];
           const otherMember = await ctx.db.get(otherMembership.memberId);
           return {
             conversation,
             otherMember,
-            lastMessage
+            lastMessage,
           };
         }
       })
@@ -52,25 +62,33 @@ export const get = query({
   },
 });
 
-const getLastMessageDetails = async ({ctx,id}:{ctx: QueryCtx | MutationCtx, id: Id<"messages"> | undefined}) => {
-  if(!id) return null;
+const getLastMessageDetails = async ({
+  ctx,
+  id,
+}: {
+  ctx: QueryCtx | MutationCtx;
+  id: Id<"messages"> | undefined;
+}) => {
+  if (!id) return null;
   const message = await ctx.db.get(id);
-  if(!message) return null;
+  if (!message) return null;
   const sender = await ctx.db.get(message.senderId);
-  if(!sender) return null;
-  const content = getMessageContent(message.type, message.content as unknown as string);
+  if (!sender) return null;
+  const content = getMessageContent(
+    message.type,
+    (message.content as unknown) as string
+  );
   return {
     content,
-    sender: sender.username
-  }
-}
+    sender: sender.username,
+  };
+};
 
 const getMessageContent = (type: string, content: string) => {
-  switch(type) {
+  switch (type) {
     case "text":
       return content;
     default:
       return "[Non-text message]";
   }
-}
-
+};
