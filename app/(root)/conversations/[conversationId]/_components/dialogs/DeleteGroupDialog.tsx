@@ -26,7 +26,7 @@ function DeleteGroupDialog({ conversationId, open, setOpen }: Props) {
             <AlertDialogHeader>
                 <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                    This action cannot be undone. All messages will be deleted and you will no longer be able to see each other's messages.
+                    This action cannot be undone. All messages will be deleted and you will no longer be able to see each other&apos;s messages.
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

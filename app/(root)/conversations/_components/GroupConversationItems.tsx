@@ -1,9 +1,9 @@
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Id } from "@/convex/_generated/dataModel";
 import { Avatar } from "@radix-ui/react-avatar";
-import { GroupIcon, User } from "lucide-react";
+import { GroupIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 

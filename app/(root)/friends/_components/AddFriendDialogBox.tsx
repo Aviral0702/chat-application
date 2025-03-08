@@ -31,7 +31,6 @@ import { useMutationState } from "@/hooks/useMutationState";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 import { ConvexError } from "convex/values";
-type Props = {};
 
 const addFriendFormSchema = z.object({
   email: z
@@ -40,7 +39,7 @@ const addFriendFormSchema = z.object({
     .email({ message: "Invalid email address" }),
 });
 
-function AddFriendDialogBox(props: Props) {
+function AddFriendDialogBox() {
   const { mutate: createRequest, pending } = useMutationState(api.request.create); 
 
   const form = useForm<z.infer<typeof addFriendFormSchema>>({

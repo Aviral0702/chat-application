@@ -20,7 +20,7 @@ function ConversationPage({
   const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
   const [deleteGroupDialogOpen, setDeleteGroupDialogOpen] = useState(false);
   const [leaveGroupDialogOpen, setLeaveGroupDialogOpen] = useState(false);
-  const [callType, setCallType] = useState<"audio" | "video" | null>(null);
+  // const [callType, setCallType] = useState<"audio" | "video" | null>(null);
   const conversation = useQuery(api.conversation.get, {
     id: conversationId,
   });

@@ -8,9 +8,9 @@ import { api } from "@/convex/_generated/api";
 import { Loader2 } from "lucide-react";
 import Request from "./_components/Request";
 
-type Props = {};
 
-function Page(props: Props) {
+
+function Page() {
   const requests = useQuery(api.requests.get);
   return (
     <>
@@ -22,7 +22,7 @@ function Page(props: Props) {
             </p>
           ) : (
             requests.map((request) => {
-              return <Request key={request.request._id} id ={request.request._id} image_url={request.sender.imageUrl} username={request.sender.username} email={request.sender.email}/>;
+              return <Request key={request.request._id} id ={request.request._id} image_url={request.sender.imageUrl || ''} username={request.sender.username || ''} email={request.sender.email || ''}/>;
             })
           )
         ) : (

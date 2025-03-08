@@ -6,7 +6,7 @@ import { useConversation } from "@/hooks/useConversation";
 import { useMutationState } from "@/hooks/useMutationState";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConvexError } from "convex/values";
-import React, { useRef } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -18,7 +18,7 @@ const chatMessageSchema = z.object({
 });
 
 export default function ChatInput() {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { conversationId } = useConversation();
   console.log(conversationId);
   const { mutate: createMessage, pending } = useMutationState(
