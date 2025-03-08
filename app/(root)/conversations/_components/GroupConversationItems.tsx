@@ -1,4 +1,5 @@
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Id } from "@/convex/_generated/dataModel";
 import { Avatar } from "@radix-ui/react-avatar";
@@ -11,6 +12,7 @@ type Props = {
   name: string;
   lastMessageSender?: string | undefined;
   lastMessageContent?: string | undefined;
+  unseenCount?: number;
 };
 
 function GroupConversationItems(props: Props) {
@@ -19,11 +21,12 @@ function GroupConversationItems(props: Props) {
     name,
     lastMessageSender,
     lastMessageContent,
+    unseenCount,
   } = props;
 
   return (
     <Link href={`/conversations/${id}`} className="w-full">
-      <Card className="p-2 flex flex-row items-center gap-4 truncate">
+      <Card className="p-2 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-4 truncate">
           <Avatar className="h-10 w-10">
             <AvatarFallback>
@@ -48,6 +51,7 @@ function GroupConversationItems(props: Props) {
             )}
           </div>
         </div>
+        {unseenCount && unseenCount > 0 ? <Badge className="rounded-2xl">{unseenCount}</Badge> : null}
       </Card>
     </Link>
   );

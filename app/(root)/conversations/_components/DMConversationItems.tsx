@@ -1,4 +1,5 @@
 import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Id } from "@/convex/_generated/dataModel";
 import { Avatar } from "@radix-ui/react-avatar";
@@ -12,6 +13,7 @@ type Props = {
   username: string;
   lastMessageSender?: string | undefined;
   lastMessageContent?: string | undefined;
+  unseenCount?: number;
 };
 
 function DMConversationItems(props: Props) {
@@ -21,11 +23,12 @@ function DMConversationItems(props: Props) {
     username,
     lastMessageSender,
     lastMessageContent,
+    unseenCount
   } = props;
 
   return (
-    <Link href={`/conversations/${id}`} className="w-full">
-      <Card className="p-2 flex flex-row items-center gap-4 truncate">
+    <Link href={`/conversations/${id}`} className="w-full ">
+      <Card className="p-2 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-4 truncate">
           <Avatar className="h-10 w-10">
             <AvatarImage src={imageUrl} />
@@ -44,13 +47,17 @@ function DMConversationItems(props: Props) {
                   {lastMessageContent}
                 </p>
               </span>
+              
             ) : (
               <p className="text-sm text-muted-foreground truncate">
                 Start the conversation
               </p>
             )}
+            
           </div>
+          
         </div>
+        {unseenCount && unseenCount > 0 ? <Badge className="rounded-2xl">{unseenCount}</Badge> : null}
       </Card>
     </Link>
   );
