@@ -10,6 +10,7 @@ import Body from "./_components/Body/Body";
 import ChatInput from "./Input/ChatInput";
 import RemoveFriendDialog from "./_components/dialogs/RemoveFriendDialog";
 import DeleteGroupDialog from "./_components/dialogs/DeleteGroupDialog";
+import LeaveGroupDialog from "./_components/dialogs/LeaveGroupDialog";
 
 function ConversationPage({
   conversationId,
@@ -42,6 +43,11 @@ function ConversationPage({
         conversationId={conversationId}
         open={deleteGroupDialogOpen}
         setOpen={setDeleteGroupDialogOpen}
+      />
+      <LeaveGroupDialog
+        conversationId={conversationId}
+        open={leaveGroupDialogOpen}
+        setOpen={setLeaveGroupDialogOpen}
       />
       <Header
         imageUrl={
