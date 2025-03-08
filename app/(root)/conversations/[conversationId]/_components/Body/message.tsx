@@ -9,6 +9,7 @@ type Props = {
   lastByUser: boolean;
   content: string[];
   createdAt: number;
+  seen?: React.ReactNode;
   type: string;
 };
 
@@ -20,6 +21,7 @@ function Message(props: Props) {
     lastByUser,
     content,
     createdAt,
+    seen,
     type,
   } = props;
   const formatTime = (timestamp: number) => {
@@ -27,46 +29,49 @@ function Message(props: Props) {
     return time;
   };
   return (
-    <div className={cn("flex items-end", { "justify-end": fromCurrentUser })}>
-      <div
-        className={cn("flex flex-col w-full mx-2", {
-          "order-1 items-end": fromCurrentUser,
-          "order-2 items-start": !fromCurrentUser,
-        })}
-      >
+    <div>
+      <div className={cn("flex items-end", { "justify-end": fromCurrentUser })}>
         <div
-          className={cn("px-4 py-2 rounded-lg max-w-[70%]", {
-            "bg-primary text-primary-foreground": fromCurrentUser,
-            "bg-secondary text-secondary-foreground": !fromCurrentUser,
-            "rounded-br-none": !lastByUser && fromCurrentUser,
-            "rounded-bl-none": !lastByUser && !fromCurrentUser,
+          className={cn("flex flex-col w-full mx-2", {
+            "order-1 items-end": fromCurrentUser,
+            "order-2 items-start": !fromCurrentUser,
           })}
         >
-          {type === "text" ? (
-            <p className="text-wrap break-words whitespace-pre-wrap break-all">
-              {content}
-            </p>
-          ) : null}
-          <p
-            className={cn("text-xs w-full my-1", {
-              "text-primary-foreground justify-end": fromCurrentUser,
-              "text-secondary-foreground justify-start": !fromCurrentUser,
+          <div
+            className={cn("px-4 py-2 rounded-lg max-w-[70%]", {
+              "bg-primary text-primary-foreground": fromCurrentUser,
+              "bg-secondary text-secondary-foreground": !fromCurrentUser,
+              "rounded-br-none": !lastByUser && fromCurrentUser,
+              "rounded-bl-none": !lastByUser && !fromCurrentUser,
             })}
           >
-            {formatTime(createdAt)}
-          </p>
+            {type === "text" ? (
+              <p className="text-wrap break-words whitespace-pre-wrap break-all">
+                {content}
+              </p>
+            ) : null}
+            <p
+              className={cn("text-xs w-full my-1", {
+                "text-primary-foreground justify-end": fromCurrentUser,
+                "text-secondary-foreground justify-start": !fromCurrentUser,
+              })}
+            >
+              {formatTime(createdAt)}
+            </p>
+          </div>
         </div>
+        <Avatar
+          className={cn("relative w-8 h-8", {
+            "order-2": fromCurrentUser,
+            "order-1": !fromCurrentUser,
+            invisible: lastByUser,
+          })}
+        >
+          <AvatarImage src={senderImage} />
+          <AvatarFallback>{senderName?.charAt(0)}</AvatarFallback>
+        </Avatar>
       </div>
-      <Avatar
-        className={cn("relative w-8 h-8", {
-          "order-2": fromCurrentUser,
-          "order-1": !fromCurrentUser,
-          invisible: lastByUser,
-        })}
-      >
-        <AvatarImage src={senderImage} />
-        <AvatarFallback>{senderName?.charAt(0)}</AvatarFallback>
-      </Avatar>
+      {seen}
     </div>
   );
 }
