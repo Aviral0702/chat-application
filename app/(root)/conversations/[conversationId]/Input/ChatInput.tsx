@@ -20,7 +20,6 @@ const chatMessageSchema = z.object({
 export default function ChatInput() {
   // const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const { conversationId } = useConversation();
-  console.log(conversationId);
   const { mutate: createMessage, pending } = useMutationState(
     api.message.create
   );
@@ -38,7 +37,6 @@ export default function ChatInput() {
     })
       .then(() => {
         form.reset();
-        console.log("Message sent");
       })
       .catch((error) => {
         toast.error(

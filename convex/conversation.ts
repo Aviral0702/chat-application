@@ -19,7 +19,6 @@ export const get = query({
       throw new Error("User not found");
     }
     const conversation = await ctx.db.get(args.id);
-    console.log(conversation);
     if (!conversation) {
       throw new ConvexError("Conversation not found");
     }
