@@ -19,6 +19,7 @@ export const get = query({
       throw new Error("User not found");
     }
     const conversation = await ctx.db.get(args.id);
+    console.log(conversation);
     if (!conversation) {
       throw new ConvexError("Conversation not found");
     }
@@ -39,7 +40,7 @@ export const get = query({
       .collect();
     if (!conversation.isGroup) {
       const otherMembership = allConversationMemberships.filter(
-        (membership) => membership.memberId === currentUser._id
+        (membership) => membership.memberId !== currentUser._id
       )[0];
       const otherMember = await ctx.db.get(otherMembership.memberId);
       return {
@@ -51,13 +52,25 @@ export const get = query({
         otherMembers: null,
       };
     } else {
-      const otherMembers = Promise.all(
+      const otherMembers = await Promise.all(
         allConversationMemberships
           .filter((membership) => membership.memberId !== currentUser._id)
           .map(async (membership) => {
             const member = await ctx.db.get(membership.memberId);
+            if(!member){
+              throw new ConvexError("Member not found")
+            }
+            return {
+              username: member.username,
+            };
           })
       );
+      
+      return {
+        ...conversation,
+        otherMember: null,
+        otherMembers,
+      };
     }
   },
 });

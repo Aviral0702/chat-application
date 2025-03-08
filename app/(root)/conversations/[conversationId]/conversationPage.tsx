@@ -41,12 +41,12 @@ function ConversationPage({
         imageUrl={
           conversation.isGroup
             ? undefined
-            : conversation.otherMember.imageUrl || ""
+            : conversation.otherMember?.imageUrl || ""
         }
         name={
           conversation.isGroup
             ? conversation.name
-            : conversation.otherMember.username || ""
+            : conversation.otherMember?.username || ""
         }
         options={
           conversation.isGroup
